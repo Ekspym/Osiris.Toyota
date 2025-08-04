@@ -5,6 +5,10 @@ VisualStudioVersion = 17.14.36327.8 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osiris.Toyota", "Osiris.Toyota\Osiris.Toyota.csproj", "{A3C791B6-D2CE-4B57-8AE0-B1B89C93092D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osiris.Toyota.Core", "Osiris.Toyota.Core\Osiris.Toyota.Core.csproj", "{8F4201CF-3BD3-4605-941B-08614E99D07C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osiris.Toyota.Infrastructure", "Osiris.Toyota.Infrastructure\Osiris.Toyota.Infrastructure.csproj", "{6317ED9E-DA10-4CA7-A8D3-BBFF6DED89F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{A3C791B6-D2CE-4B57-8AE0-B1B89C93092D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3C791B6-D2CE-4B57-8AE0-B1B89C93092D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3C791B6-D2CE-4B57-8AE0-B1B89C93092D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F4201CF-3BD3-4605-941B-08614E99D07C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F4201CF-3BD3-4605-941B-08614E99D07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F4201CF-3BD3-4605-941B-08614E99D07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F4201CF-3BD3-4605-941B-08614E99D07C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6317ED9E-DA10-4CA7-A8D3-BBFF6DED89F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6317ED9E-DA10-4CA7-A8D3-BBFF6DED89F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6317ED9E-DA10-4CA7-A8D3-BBFF6DED89F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6317ED9E-DA10-4CA7-A8D3-BBFF6DED89F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
