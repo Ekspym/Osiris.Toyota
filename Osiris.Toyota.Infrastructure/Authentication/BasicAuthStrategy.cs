@@ -13,7 +13,7 @@ namespace Osiris.Toyota.Infrastructure.Authentication
 {
     public class BasicAuthStrategy : AuthStrategyBase
     {
-        public BasicAuthStrategy(IDataProtectionProvider provider) : base(provider)
+        public BasicAuthStrategy(IDataProtectionProvider provider, Microsoft.Extensions.Logging.ILogger<BasicAuthStrategy> logger) : base(provider)
         {
         }
 
