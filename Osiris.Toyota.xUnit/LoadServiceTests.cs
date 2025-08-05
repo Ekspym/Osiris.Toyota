@@ -36,7 +36,7 @@ namespace Osiris.Toyota.Infrastructure.Tests.Services
                 dataProtection,
                 loggerFactory)
             {
-                CallBase = true // This will use real methods unless overridden
+                CallBase = true 
             };
 
             _mapperMock = new Mock<IGenericMapper>();
