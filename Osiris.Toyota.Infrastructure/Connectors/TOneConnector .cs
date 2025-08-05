@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.JsonPatch;
 using Newtonsoft.Json;
 using Osiris.Toyota.Core.Abstractions;
 using Osiris.Toyota.Core.Entities;
@@ -10,14 +11,16 @@ namespace Osiris.Toyota.Infrastructure.Connectors
 {
     public class TOneConnector : IExternalSystemConnector
     {
-        private readonly ExternalSystem _system;
-        private readonly HttpClient _httpClient;
+        private readonly ExternalSystem system;
+        private readonly HttpClient httpClient;
+        private readonly IDataProtectionProvider dataProtectionProvider;
         private const string HealthCheckEndpoint = "/api/v1/health";
 
-        public TOneConnector(ExternalSystem system, HttpClient httpClient)
+        public TOneConnector(ExternalSystem system, HttpClient httpClient, IDataProtectionProvider dataProtectionProvider)
         {
-            _system = system;
-            _httpClient = httpClient;
+            this.system = system;
+            this.httpClient = httpClient;
+            this.dataProtectionProvider = dataProtectionProvider;
         }
 
         public async Task<bool> HealthCheckAsync()
@@ -26,10 +29,10 @@ namespace Osiris.Toyota.Infrastructure.Connectors
             {
                 var request = new HttpRequestMessage(HttpMethod.Get, BuildFullUrl(HealthCheckEndpoint));
 
-                var authStrategy = AuthStrategyFactory.GetStrategy(_system.AuthType);
-                await authStrategy.ApplyAuthorizationAsync(request, _system);
+                var authStrategy = AuthStrategyFactory.GetStrategy(system.AuthType, dataProtectionProvider);
+                await authStrategy.ApplyAuthorizationAsync(request, system);
 
-                var response = await _httpClient.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
 
                 return response.StatusCode == HttpStatusCode.OK;
             }
@@ -39,10 +42,7 @@ namespace Osiris.Toyota.Infrastructure.Connectors
             }
         }
 
-        public async Task<TResponse> SendRequestAsync<TResponse>(
-            HttpMethod method,
-            string route,
-            object payload = null)
+        public async Task<TResponse> SendRequestAsync<TResponse>(HttpMethod method,string route,object payload = null)
         {
             var request = new HttpRequestMessage(method, BuildFullUrl(route));
 
@@ -63,20 +63,17 @@ namespace Osiris.Toyota.Infrastructure.Connectors
                 request.Content = content;
             }
 
-            var authStrategy = AuthStrategyFactory.GetStrategy(_system.AuthType);
-            await authStrategy.ApplyAuthorizationAsync(request, _system);
+            var authStrategy = AuthStrategyFactory.GetStrategy(system.AuthType, dataProtectionProvider);
+            await authStrategy.ApplyAuthorizationAsync(request, system);
 
-            var response = await _httpClient.SendAsync(request);
+            var response = await httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             var responseContent = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<TResponse>(responseContent);
         }
 
-        public async Task<TResponse> SendRequestAsync<TRequest, TResponse>(
-            HttpMethod method,
-            string route,
-            TRequest payload = default)
+        public async Task<TResponse> SendRequestAsync<TRequest, TResponse>(HttpMethod method, string route, TRequest payload = default)
         {
             var request = new HttpRequestMessage(method, BuildFullUrl(route));
 
@@ -86,10 +83,10 @@ namespace Osiris.Toyota.Infrastructure.Connectors
                 request.Content = new StringContent(json, Encoding.UTF8, "application/json");
             }
 
-            var authStrategy = AuthStrategyFactory.GetStrategy(_system.AuthType);
-            await authStrategy.ApplyAuthorizationAsync(request, _system);
+            var authStrategy = AuthStrategyFactory.GetStrategy(system.AuthType, dataProtectionProvider);
+            await authStrategy.ApplyAuthorizationAsync(request, system);
 
-            var response = await _httpClient.SendAsync(request);
+            var response = await httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -98,7 +95,7 @@ namespace Osiris.Toyota.Infrastructure.Connectors
 
         private Uri BuildFullUrl(string route)
         {
-            return new Uri(new Uri(_system.EndpointUrl), route);
+            return new Uri(new Uri(system.EndpointUrl), route);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Osiris.Toyota.Core.Abstractions;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Osiris.Toyota.Core.Abstractions;
+using Osiris.Toyota.Core.DTOs;
 using Osiris.Toyota.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,12 +11,15 @@ using System.Threading.Tasks;
 
 namespace Osiris.Toyota.Infrastructure.Authentication
 {
-    public class BasicAuthStrategy : IAuthStrategy
+    public class BasicAuthStrategy : AuthStrategyBase
     {
-        public void ApplyAuthorization(HttpRequestMessage request, ExternalSystem system)
+        public BasicAuthStrategy(IDataProtectionProvider provider) : base(provider)
         {
-            var base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(system.AccessToken));
-            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", base64);
+        }
+
+        public override Task<AuthResult> ApplyAuthorizationAsync(HttpRequestMessage request, ExternalSystem system)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Osiris.Toyota.Core.Entities;
+﻿using Osiris.Toyota.Core.DTOs;
+using Osiris.Toyota.Core.Entities;
 
 namespace Osiris.Toyota.Core.Abstractions
 {
