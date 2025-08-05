@@ -1,89 +1,35 @@
-# **Osiris.Toyota.Core - Dokumentace**
+# **Osiris.Toyota.Core - Dokumentace k úkolu**
 
-## **Základní rozhraní**
+## **Úvod**
+Tento projekt představuje **jednotné jádro** pro integraci s externími systémy (T1 a případně další). Vznikl jako řešení problému s duplicitním kódem a nekonzistentními integracemi.
 
-### **IAuthStrategy**
-- **Účel:** Přidává autorizaci do HTTP požadavků  
-- **Použití:**  
-  ```csharp
-  await _authStrategy.ApplyAuthorizationAsync(request, system);
-  ```
+## **Aktuální stav**
+✅ **Hotové:**
+- Základní rozhraní pro autentizaci, správu systémů a komunikaci
+- Implementace pro T1 systém
+- Modulární architektura
 
-### **IEventDispatcher**
-- **Účel:** Odesílá notifikační události  
-- **Příklad:**  
-  ```csharp
-  await _dispatcher.Dispatch(new NotificationEvent(...));
-  ```
+🛠 **Ve vývoji:**
+- Automatická registrace modulů
+- Rozšířená konfigurace z appsettings.json
 
-### **IEventSubscriber**
-- **Funkce:**  
-  - `SubscribeAsync` - Přidá odběr událostí  
-  - `UnsubscribeAsync` - Zruší odběr  
-  - `NotifyAsync` - Ruční notifikace  
+## **Hlavní komponenty**
 
-### **IExternalSystemRegistry**
-- **Správa externích systémů:**  
-  ```csharp
-  _registry.GetByName("Toyota"); // Získá konfiguraci
-  _registry.AddOrUpdate(system); // Aktualizuje registr
-  ```
-
-### **IGenericMapper**
-- **Mapování objektů:**  
-  ```csharp
-  var dto = _mapper.Map<Entity, Dto>(entity);
-  ```
-
-### **IExternalSystemConnector**
-- **Komunikace s API:**  
-  ```csharp
-  var response = await _connector.SendRequestAsync<Response>(HttpMethod.Get, "/api/data");
-  ```
-
----
-
-## **Jak přidat nový systém?**
-1. Vytvořte connector (implementuje `IExternalSystemConnector`)
-2. Zaregistrujte v `ExternalSystemRegistry`:
-   ```csharp
-   registry.AddOrUpdate(new ExternalSystem { 
-     Name = "Ford", 
-     AuthType = AuthType.OAuth2 
-   });
-   ```
-
----
-
-## **Konfigurace**
-Nastavení systémů lze načíst z:
-```json
-// appsettings.json
-{
-  "ExternalSystems": {
-    "Toyota": {
-      "AuthType": "OAuth2",
-      "BaseUrl": "https://api.toyota.com"
-    }
-  }
-}
-```
-
----
-
-## **Testování**
+### **1. Autentizace (`IAuthStrategy`)**
 ```csharp
-// Unit test pro auth strategii
-[Test]
-public void AuthStrategy_Adds_Correct_Headers()
-{
-    var request = new HttpRequestMessage();
-    await _strategy.ApplyAuthorizationAsync(request, system);
-    Assert.NotNull(request.Headers.Authorization);
-}
+// Příklad použití:
+await _authStrategy.ApplyAuthorizationAsync(request, system);
 ```
 
----
+### **2. Správa externích systémů**
+```csharp
+// Získání connectoru
+var connector = _registry.GetByName("T1");
+```
 
-**Stručné, jasné, bez zbytečností.**  
-Potřebujete doplnit konkrétní část?
+## **Další kroky**
+- Dokončit automatickou registraci modulů
+- Rozšířit testování
+- Doplnit dokumentaci pro vývojáře
+
+**Poslední aktualizace:** 6. 8. 2025
