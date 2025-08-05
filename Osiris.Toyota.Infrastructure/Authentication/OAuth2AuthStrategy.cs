@@ -7,9 +7,11 @@ namespace Osiris.Toyota.Infrastructure.Authentication
 {
     public class OAuth2AuthStrategy : IAuthStrategy
     {
-        public void ApplyAuthorization(HttpRequestMessage request, ExternalSystem system)
+        public Task ApplyAuthorizationAsync(HttpRequestMessage request, ExternalSystem system)
         {
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", system.AccessToken);
+            return Task.CompletedTask;
         }
+
     }
 }

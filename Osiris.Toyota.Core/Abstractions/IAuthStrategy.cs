@@ -4,6 +4,6 @@ namespace Osiris.Toyota.Core.Abstractions
 {
     public interface IAuthStrategy
     {
-        Task ApplyAuthorizationAsync(HttpRequestMessage request, ExternalSystem system);
+        Task<AuthResult> ApplyAuthorizationAsync(HttpRequestMessage request, ExternalSystem system);
     }
 }

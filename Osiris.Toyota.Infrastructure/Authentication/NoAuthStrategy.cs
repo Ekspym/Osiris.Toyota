@@ -11,7 +11,7 @@ namespace Osiris.Toyota.Infrastructure.Authentication
 {
     public class NoAuthStrategy : IAuthStrategy
     {
-        public void ApplyAuthorization(HttpRequestMessage request, ExternalSystem system)
+        public async Task ApplyAuthorizationAsync(HttpRequestMessage request, ExternalSystem system)
         {
             // no-op
         }

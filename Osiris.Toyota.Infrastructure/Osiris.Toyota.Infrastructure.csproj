@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Osiris.Toyota.Core\Osiris.Toyota.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>
