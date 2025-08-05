@@ -8,6 +8,6 @@ namespace Osiris.Toyota.Core.Entities
 {
     public class Authentication
     {
-        public string Credentials { get; set; } // Base64 encoded
+        public string Credentials { get; set; } 
     }
 }

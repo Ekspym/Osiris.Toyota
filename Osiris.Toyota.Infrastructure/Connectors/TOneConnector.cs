@@ -20,11 +20,7 @@ namespace Osiris.Toyota.Infrastructure.Connectors
         private readonly ILoggerFactory _loggerFactory;
         private const string HealthCheckEndpoint = "/api/v1/health";
 
-        public TOneConnector(
-            ExternalSystem system,
-            HttpClient httpClient,
-            IDataProtectionProvider dataProtectionProvider,
-            ILoggerFactory loggerFactory)
+        public TOneConnector(ExternalSystem system, HttpClient httpClient, IDataProtectionProvider dataProtectionProvider, ILoggerFactory loggerFactory)
         {
             _system = system ?? throw new ArgumentNullException(nameof(system));
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
